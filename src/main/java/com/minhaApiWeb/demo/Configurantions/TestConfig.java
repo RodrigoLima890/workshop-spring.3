@@ -10,9 +10,11 @@ import org.springframework.context.annotation.Profile;
 
 import com.minhaApiWeb.demo.entities.Category;
 import com.minhaApiWeb.demo.entities.Order;
+import com.minhaApiWeb.demo.entities.OrderItem;
 import com.minhaApiWeb.demo.entities.Product;
 import com.minhaApiWeb.demo.entities.User;
 import com.minhaApiWeb.demo.entities.repositories.CategoryRepository;
+import com.minhaApiWeb.demo.entities.repositories.OrderItemRepository;
 import com.minhaApiWeb.demo.entities.repositories.OrderRepository;
 import com.minhaApiWeb.demo.entities.repositories.ProductRepository;
 import com.minhaApiWeb.demo.entities.repositories.UserRepository;
@@ -33,6 +35,8 @@ public class TestConfig implements CommandLineRunner{
 	
 	@Autowired
 	private ProductRepository productRepository;
+	@Autowired
+	private OrderItemRepository orderItemRepository;
 
 	//tudo no método run será executado quando a aplicação rodar.
 	@Override
@@ -70,6 +74,14 @@ public class TestConfig implements CommandLineRunner{
 		
 		userRepository.saveAll(Arrays.asList(u1,u2,u3));
 		orderRepository.saveAll(Arrays.asList(o1,o2,o3));
+		
+		OrderItem oi1 = new OrderItem(o1, p1, 2, p1.getPrice()); 
+		OrderItem oi2 = new OrderItem(o1, p3, 1, p3.getPrice()); 
+		OrderItem oi3 = new OrderItem(o2, p3, 2, p3.getPrice()); 
+		OrderItem oi4 = new OrderItem(o3, p5, 2, p5.getPrice()); 
+		
+		orderItemRepository.saveAll(Arrays.asList(oi1,oi2,oi3,oi4));
+		
 		
 		
 	}
