@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.minhaApiWeb.demo.entities.User;
 import com.minhaApiWeb.demo.entities.repositories.UserRepository;
+import com.minhaApiWeb.demo.service.exceptions.ResourceNotFoundException;
 @Service
 
 public class UserService {
@@ -21,7 +22,7 @@ public class UserService {
 
 	public User findUserById(Long id) {
 		Optional<User> user = userRepository.findById(id);
-		return user.get();
+		return user.orElseThrow(()-> new ResourceNotFoundException(id));
 	}
 	public User insert(User obj) {
 		return userRepository.save(obj);
