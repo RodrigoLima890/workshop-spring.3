@@ -1,6 +1,7 @@
 package com.minhaApiWeb.demo.service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,9 +41,13 @@ public class UserService {
 		}
 	}
 	public User update(Long id, User obj) {
-		Optional<User> entity = userRepository.findById(id);
-		updateUser(entity.get(), obj);
-		return userRepository.save(entity.get());
+		try {
+			Optional<User> entity = userRepository.findById(id);
+			updateUser(entity.get(), obj);
+			return userRepository.save(entity.get());
+		}catch(NoSuchElementException e) {
+			throw new ResourceNotFoundException(id);
+		}
 	}
 
 	private void updateUser(User entity, User obj) {
